@@ -22,7 +22,7 @@ private let table: DecodeTable =
 
 extension UnsafeMutableRawBufferPointer {
     func initialize(decodingHex bytes: UnsafeRawBufferPointer) -> Bool {
-        guard bytes.count % 2 == 0, (count << 1) == bytes.count else {
+        guard bytes.count.isEven, count.twice == bytes.count else {
             return false
         }
         for i in stride(from: 0, to: bytes.count, by: 2) {
@@ -34,7 +34,7 @@ extension UnsafeMutableRawBufferPointer {
             guard high != -1, low != -1 else {
                 return false
             }
-            self[i >> 1] = UInt8(high) << 4 | UInt8(low)
+            self[i.half] = UInt8(high) << 4 | UInt8(low)
         }
         return true
     }
@@ -43,10 +43,10 @@ extension UnsafeMutableRawBufferPointer {
 extension Array where Element == UInt8 {
     public init?(decodingHexString string: String) {
         let count = string.count
-        guard count % 2 == 0 else {
+        guard count.isEven else {
             return nil
         }
-        var bytes = [UInt8](repeating: 0, count: count >> 1)
+        var bytes = [UInt8](repeating: 0, count: count.half)
         let buffer = UnsafeMutableRawBufferPointer(
             start: &bytes, count: bytes.count)
 

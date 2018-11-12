@@ -23,7 +23,7 @@ extension String {
         encodingToHex bytes: UnsafeRawBufferPointer,
         uppercase: Bool = false)
     {
-        let count = bytes.count << 1
+        let count = bytes.count.twice
         let result = UnsafeMutablePointer<UInt8>.allocate(capacity: count + 1)
         for i in 0..<bytes.count {
             var highByte = table[Int(bytes[i] >> 4)]
@@ -32,9 +32,8 @@ extension String {
                 if highByte >= UInt8(ascii: "a") { highByte ^= 0b0010_0000 }
                 if lowByte >= UInt8(ascii: "a") { lowByte ^= 0b0010_0000 }
             }
-            let position = i << 1
-            result.advanced(by: position).pointee = highByte
-            result.advanced(by: position + 1).pointee = lowByte
+            result.advanced(by: i.twice).pointee = highByte
+            result.advanced(by: i.twice + 1).pointee = lowByte
         }
         result.advanced(by: count).pointee = 0
         self.init(cString: result)
