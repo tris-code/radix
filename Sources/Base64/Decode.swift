@@ -86,11 +86,13 @@ extension Array where Element == UInt8 {
 }
 
 extension Array where Element == UInt8 {
+    @inlinable
     public init?(decodingBase64 bytes: [UInt8]) {
         self.init(decodingBase64: UnsafeRawBufferPointer(
             start: bytes, count: bytes.count))
     }
 
+    @inlinable
     public init?<T: StringProtocol>(decodingBase64 string: T) {
         let result = string.withCString { pointer in
             return [UInt8](decodingBase64: UnsafeRawBufferPointer(
@@ -104,6 +106,7 @@ extension Array where Element == UInt8 {
 }
 
 extension String {
+    @inlinable
     public init?(decodingBase64 buffer: UnsafeRawBufferPointer) {
         guard let result = [UInt8](decodingBase64: buffer) else {
             return nil
@@ -111,11 +114,13 @@ extension String {
         self = String(decoding: result, as: UTF8.self)
     }
 
+    @inlinable
     public init?(decodingBase64 bytes: [UInt8]) {
         self.init(decodingBase64: UnsafeRawBufferPointer(
             start: bytes, count: bytes.count))
     }
 
+    @inlinable
     public init?<T: StringProtocol>(decodingBase64 string: T) {
         let result = string.withCString { pointer in
             return String(decodingBase64: UnsafeRawBufferPointer(

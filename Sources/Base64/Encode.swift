@@ -16,8 +16,8 @@ private var table: EncodeTable = .init((
     "0123456789+/")
     .utf8)
 
-private extension Array where Element == UInt8 {
-    init(encodingToBase64 bytes: UnsafeRawBufferPointer) {
+extension Array where Element == UInt8 {
+    public init(encodingToBase64 bytes: UnsafeRawBufferPointer) {
         var result = [UInt8]()
         for i in stride(from: 0, to: bytes.count, by: 3) {
             result.append((table[x3f: bytes[i] >> 2]))
@@ -43,16 +43,19 @@ private extension Array where Element == UInt8 {
 // MARK: public api
 
 extension String {
+    @inlinable
     public init(encodingToBase64 buffer: UnsafeRawBufferPointer) {
         let result = [UInt8](encodingToBase64: buffer)
         self = String(decoding: result, as: UTF8.self)
     }
 
+    @inlinable
     public init(encodingToBase64 bytes: [UInt8]) {
         self.init(encodingToBase64: UnsafeRawBufferPointer(
             start: bytes, count: bytes.count))
     }
 
+    @inlinable
     public init<T: StringProtocol>(encodingToBase64 string: T) {
         self = string.withCString { pointer in
             return String(encodingToBase64: UnsafeRawBufferPointer(
