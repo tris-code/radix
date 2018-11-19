@@ -90,6 +90,17 @@ extension Array where Element == UInt8 {
         self.init(decodingBase64: UnsafeRawBufferPointer(
             start: bytes, count: bytes.count))
     }
+
+    public init?<T: StringProtocol>(decodingBase64 string: T) {
+        let result = string.withCString { pointer in
+            return [UInt8](decodingBase64: UnsafeRawBufferPointer(
+                start: pointer, count: string.utf8.count))
+        }
+        guard let bytes = result else {
+            return nil
+        }
+        self = bytes
+    }
 }
 
 extension String {
