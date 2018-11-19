@@ -13,7 +13,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "Hex",
+    name: "Radix",
     products: [
         .library(name: "Hex", targets: ["Hex"]),
     ],
