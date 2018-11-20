@@ -40,6 +40,14 @@ extension Array where Element == UInt8 {
     }
 }
 
+extension Array where Element == UInt8 {
+    @inlinable
+    public init(encodingToBase64 bytes: [UInt8]) {
+        self.init(encodingToBase64: UnsafeRawBufferPointer(
+            start: bytes, count: bytes.count))
+    }
+}
+
 // MARK: public api
 
 extension String {
