@@ -11,8 +11,10 @@
 ### Hex
 
 ```swift
-_ = String(encodingToHex: [192, 1])
-_ = String(encodingToHex: [192, 1], uppercase: true)
+"c001" == String(encodingToHex: [192, 1])
+"C001" == String(encodingToHex: [192, 1], format: .uppercase)
+"[0xc0, 0x01]" == String(encodingToHex: [192, 1], format: .array)
+"[0xC0, 0x01]" == String(encodingToHex: [192, 1], format: [.uppercase, .array])
 
 _ = [UInt8](decodingHexString: "c001")
 _ = [UInt8](decodingHexString: "C001")
