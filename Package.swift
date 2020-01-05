@@ -8,9 +8,7 @@ let package = Package(
         .library(name: "Base64", targets: ["Base64"]),
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/tris-code/test.git",
-            .branch("master"))
+        .package(path: "../Test")
     ],
     targets: [
         .target(
