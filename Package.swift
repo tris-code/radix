@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "Base64", targets: ["Base64"]),
     ],
     dependencies: [
-        .package(path: "../Test")
+        .package(path: "../test")
     ],
     targets: [
         .target(
